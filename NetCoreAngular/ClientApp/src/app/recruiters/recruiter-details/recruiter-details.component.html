@@ -1,0 +1,25 @@
+<div class="app-recruiter-details">
+  <mat-card>
+    <mat-card-title-group class="fullBleed">
+      <img mat-card-md-image [src]="recruiter?.image || ''">
+      <mat-card-title>{{recruiter?.name}}</mat-card-title>
+    </mat-card-title-group>
+    <mat-card-content>
+      <dl>
+        <dt>Role:</dt>
+        <dd>{{recruiter?.role}}</dd>
+        <dt>Email:</dt>
+        <dd>{{recruiter?.email}}</dd>
+        <dt>Telephone:</dt>
+        <dd>{{recruiter?.tel}}</dd>
+        <dt *ngIf="recruiter.description">Description:</dt>
+        <dd *ngIf="recruiter.description">{{recruiter?.description}}</dd>
+      </dl>
+    </mat-card-content>
+    <mat-card-actions fxLayout fxLayoutAlign="center center">
+      <button [routerLink]="['/recruiters', recruiter.id, 'edit']" type="button" class="btn btn-primary">Edit</button>
+      <button (click)="deleteRecruiter(recruiter)" type="button" class="btn btn-danger ml-2">Delete</button>
+      <button (click)="goBack()" type="button" class="btn ml-2">Go Back</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

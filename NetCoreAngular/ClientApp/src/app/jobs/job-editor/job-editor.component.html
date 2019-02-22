@@ -1,0 +1,80 @@
+<div>
+  <h3>{{title}} Job</h3>
+  <form [formGroup]="jobForm" (ngSubmit)="save(jobForm.value)" autocomplete="off" class="pt-2" novalidate>
+    <div class="row">
+      <mat-form-field class="col">
+
+        <input formControlName="id" hidden />
+
+        <input matInput placeholder="Job Title" formControlName="title" required>
+        <mat-error *ngFor="let validation of validation_messages.title">
+          <mat-error class="error-message" *ngIf="jobForm.get('title').hasError(validation.type) &&
+                   (jobForm.get('title').dirty || jobForm.get('title').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col">
+        <input matInput placeholder="Location" formControlName="location" required>
+        <mat-error *ngFor="let validation of validation_messages.location">
+          <mat-error class="error-message" *ngIf="jobForm.get('location').hasError(validation.type) &&
+                   (jobForm.get('location').dirty || jobForm.get('location').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col">
+        <input matInput placeholder="Salary" formControlName="salary" required>
+        <mat-error *ngFor="let validation of validation_messages.salary">
+          <mat-error class="error-message" *ngIf="jobForm.get('salary').hasError(validation.type) &&
+                   (jobForm.get('salary').dirty || jobForm.get('salary').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-select matInput placeholder="Contact" formControlName="recruiterId" required>
+          <mat-option *ngFor="let recruiter of recruiters | async" [value]="recruiter.id">
+            {{recruiter.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngFor="let validation of validation_messages.recruiterId">
+          <mat-error class="error-message" *ngIf="jobForm.get('recruiterId').hasError(validation.type) &&
+                   (jobForm.get('recruiterId').dirty || jobForm.get('recruiterId').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col">
+        <textarea matInput placeholder="Description" formControlName="description" matTextareaAutosize
+                  matAutosizeMinRows="2" matAutosizeMaxRows="5" required></textarea>
+        <mat-hint align="start">Tell us about the job</mat-hint>
+        <mat-hint align="end">{{jobForm.get('description').value?.length}} / 255</mat-hint>
+        <mat-error *ngFor="let validation of validation_messages.description">
+          <mat-error class="error-message" *ngIf="jobForm.get('description').hasError(validation.type) &&
+                   (jobForm.get('description').dirty || jobForm.get('description').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <div class="col pt-4">
+        <button [disabled]="jobForm.invalid" type="submit" class="btn btn-primary">Save</button>
+        <button [routerLink]="['/jobs']" type="button" class="btn ml-2">Go Back</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,22 @@
+<div class="app-job-details">
+  <mat-card>
+    <mat-card-title-group class="fullBleed">
+      <img mat-card-md-image [src]="job?.company?.image || ''">
+      <mat-card-title>{{job?.title}}</mat-card-title>
+      <mat-card-subtitle>{{job?.location}}, Salary <span *ngIf="job.salary;else empty_salary">£{{job?.salary.toString()}}</span></mat-card-subtitle>
+      <mat-card-subtitle>Added: {{job?.datePosted | date: 'dd/MM/yyyy'}}</mat-card-subtitle>
+      <ng-template #empty_salary>Negotiable</ng-template>
+    </mat-card-title-group>
+    <mat-card-content>
+      <dl>
+        <dt>Description:</dt>
+        <dd>{{job?.description}}</dd>
+      </dl>
+    </mat-card-content>
+    <mat-card-actions fxLayout fxLayoutAlign="center center">
+      <button [routerLink]="['/jobs', job.id, 'edit']" type="button" class="btn btn-primary">Edit</button>
+      <button (click)="deleteJob(job)" type="button" class="btn btn-danger ml-2">Delete</button>
+      <button [routerLink]="['/jobs']" type="button" class="btn ml-2">Go Back</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,16 @@
+<div class="well thumbnail">
+  <h3>
+    <a [routerLink]="['/jobs', job?.id]" class="data-link">
+      {{job?.title}}
+    </a>
+  </h3>
+  <div>Location: {{job?.location}} </div>
+  <div>Date posted: {{job?.datePosted | date: 'dd/MM/yyyy'}}</div>
+  <div>Salary: £{{job?.salary}}</div>
+  <div>Description: {{job?.description}}</div>
+  <div *ngIf="job.recruiter">
+    Recruiter:
+    <a [routerLink]="['/recruiters', job.recruiter.id]"
+       class="data-link">{{job?.recruiter?.name}}</a>
+  </div>
+</div>

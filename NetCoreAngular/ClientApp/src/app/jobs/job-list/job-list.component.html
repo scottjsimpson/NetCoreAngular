@@ -1,0 +1,16 @@
+<div>
+  <div class="row">
+    <div class="col">
+      <h2>Latest Jobs</h2>
+    </div>
+    <div class="col">
+      <button [routerLink]="['/jobs/new']" class="btn btn-primary float-right">Create</button>
+    </div>
+  </div>
+  <hr>
+ <div class="row">
+     <div *ngFor="let job of jobs" class="col-md-5" >
+         <app-job-thumbnail [job]="job"></app-job-thumbnail>
+     </div>
+ </div>
+</div>
