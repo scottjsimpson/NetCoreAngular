@@ -1,88 +1,99 @@
-<div class="container">
-  
+<div class="app-recruiter-editor">
+
   <h3>{{title}} Recruiter</h3>
-  <form [formGroup]="recruiterForm" (ngSubmit)="save(recruiterForm.value)" autocomplete="off" class="pt-2" novalidate>
 
-    <div class="row">
-      <mat-form-field class="col">
+  <form [formGroup]="recruiterForm" (ngSubmit)="save(recruiterForm.value)"
+        autocomplete="off" novalidate>
 
-        <input formControlName="id" hidden />
-
-        <input matInput placeholder="Full Name" formControlName="name" required>
-        <mat-error *ngFor="let validation of validation_messages.name">
-          <mat-error class="error-message" *ngIf="recruiterForm.get('name').hasError(validation.type) &&
-                   (recruiterForm.get('name').dirty || recruiterForm.get('name').touched)">
-            {{validation.message}}
-          </mat-error>
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="row">
-      <mat-form-field class="col">
-        <input matInput placeholder="Role" formControlName="role" required>
-        <mat-error *ngFor="let validation of validation_messages.role">
-          <mat-error class="error-message" *ngIf="recruiterForm.get('role').hasError(validation.type) &&
-                   (recruiterForm.get('role').dirty || recruiterForm.get('role').touched)">
-            {{validation.message}}
-          </mat-error>
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="row">
-      <mat-form-field class="col">
-        <input matInput placeholder="Location" formControlName="location" required>
-        <mat-error *ngFor="let validation of validation_messages.location">
-          <mat-error class="error-message" *ngIf="recruiterForm.get('location').hasError(validation.type) &&
-                   (recruiterForm.get('location').dirty || recruiterForm.get('location').touched)">
-            {{validation.message}}
-          </mat-error>
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="row">
-      <mat-form-field class="col">
-        <input matInput placeholder="Telephone" formControlName="tel" required>
-        <mat-error *ngFor="let validation of validation_messages.tel">
-          <mat-error class="error-message" *ngIf="recruiterForm.get('tel').hasError(validation.type) &&
-                   (recruiterForm.get('tel').dirty || recruiterForm.get('tel').touched)">
-            {{validation.message}}
-          </mat-error>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="col">
-        <input matInput placeholder="Email" formControlName="email" required>
-        <mat-error *ngFor="let validation of validation_messages.email">
-          <mat-error class="error-message" *ngIf="recruiterForm.get('email').hasError(validation.type) &&
-                   (recruiterForm.get('email').dirty || recruiterForm.get('email').touched)">
-            {{validation.message}}
-          </mat-error>
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="row">
-      <mat-form-field class="col">
-        <textarea matInput placeholder="Description" formControlName="description" matTextareaAutosize
-                  matAutosizeMinRows="2" matAutosizeMaxRows="5" required></textarea>
-        <mat-hint align="start">Tell us about yourself</mat-hint>
-        <mat-hint align="end">{{recruiterForm.get('description').value?.length}} / 255</mat-hint>
-        <mat-error *ngFor="let validation of validation_messages.description">
-          <mat-error class="error-message" *ngIf="recruiterForm.get('description').hasError(validation.type) &&
-                   (recruiterForm.get('description').dirty || recruiterForm.get('description').touched)">
-            {{validation.message}}
-          </mat-error>
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="row">
-      <div class="col pt-3">
-        <button [disabled]="recruiterForm.invalid" class="btn btn-primary">Save</button>
-        <button [routerLink]="['/recruiters']" type="button" class="btn ml-2">Go Back</button>
+    <mat-card>
+      <div class="hoverable" (click)="imageInput.click()">
+        <img mat-card-md-image [src]="url">
+        <div class="hover-text">Choose image</div>
+        <div class="background"></div>
       </div>
-    </div>
+      <input id="imageInput" #imageInput type="file" (change)="updateImage()" accept="image/*" />
+
+      <mat-card-content>
+        <div class="row pt-3">
+          <mat-form-field class="col">
+
+            <input formControlName="id" hidden />
+
+            <input matInput placeholder="Full Name" formControlName="name" required>
+            <mat-error *ngFor="let validation of validation_messages.name">
+              <mat-error class="error-message" *ngIf="recruiterForm.get('name').hasError(validation.type) &&
+                  (recruiterForm.get('name').dirty || recruiterForm.get('name').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="col">
+            <input matInput placeholder="Role" formControlName="role" required>
+            <mat-error *ngFor="let validation of validation_messages.role">
+              <mat-error class="error-message" *ngIf="recruiterForm.get('role').hasError(validation.type) &&
+                  (recruiterForm.get('role').dirty || recruiterForm.get('role').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="col">
+            <input matInput placeholder="Location" formControlName="location" required>
+            <mat-error *ngFor="let validation of validation_messages.location">
+              <mat-error class="error-message" *ngIf="recruiterForm.get('location').hasError(validation.type) &&
+                  (recruiterForm.get('location').dirty || recruiterForm.get('location').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="col">
+            <input matInput placeholder="Telephone" formControlName="tel" required>
+            <mat-error *ngFor="let validation of validation_messages.tel">
+              <mat-error class="error-message" *ngIf="recruiterForm.get('tel').hasError(validation.type) &&
+                  (recruiterForm.get('tel').dirty || recruiterForm.get('tel').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col">
+            <input matInput placeholder="Email" formControlName="email" required>
+            <mat-error *ngFor="let validation of validation_messages.email">
+              <mat-error class="error-message" *ngIf="recruiterForm.get('email').hasError(validation.type) &&
+                  (recruiterForm.get('email').dirty || recruiterForm.get('email').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="col">
+            <textarea matInput placeholder="Description" formControlName="description" matTextareaAutosize
+                      matAutosizeMinRows="2" matAutosizeMaxRows="5" required></textarea>
+            <mat-hint align="start">Tell us about yourself</mat-hint>
+            <mat-hint align="end">{{recruiterForm.get('description').value?.length}} / 255</mat-hint>
+            <mat-error *ngFor="let validation of validation_messages.description">
+              <mat-error class="error-message" *ngIf="recruiterForm.get('description').hasError(validation.type) &&
+                  (recruiterForm.get('description').dirty || recruiterForm.get('description').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions fxLayout fxLayoutAlign="center center">
+          <button [disabled]="recruiterForm.invalid" class="btn btn-primary">Save</button>
+          <button [routerLink]="['/recruiters']" type="button" class="btn btn-secondary ml-2">Go Back</button>
+        </mat-card-actions>
+    </mat-card>
   </form>
 </div>

@@ -12,6 +12,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class RecruiterEditorComponent implements OnInit {
   recruiter: Recruiter = <Recruiter>{};
   title: string;
+  url: any = '';
 
   recruiterForm: FormGroup;
 
@@ -49,7 +50,7 @@ export class RecruiterEditorComponent implements OnInit {
     if (!isAdd) {
       this.recruiter = this.route.snapshot.data.recruiter;
     }
-
+    this.url = this.recruiter.image || '../../../assets/images/placeholder.png';
     this.createForm();
   }
 
@@ -78,5 +79,18 @@ export class RecruiterEditorComponent implements OnInit {
         Validators.maxLength(255)
       ])),
     });
+  }
+
+  updateImage() {
+    let reader = new FileReader();
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length) {
+      const file: File = (target.files as FileList)[0];
+      reader.readAsDataURL(file);
+
+      reader.onload = (e) => {
+        this.url = e.target.result;
+      };
+    }
   }
 }
