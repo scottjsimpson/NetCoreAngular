@@ -11,13 +11,14 @@
         <div class="hover-text">Choose image</div>
         <div class="background"></div>
       </div>
-      <input id="imageInput" #imageInput type="file" (change)="updateImage()" accept="image/*" />
+      <input id="imageInput" #imageInput type="file" (change)="onFileChange($event)" accept="image/*" />
 
       <mat-card-content>
         <div class="row pt-3">
           <mat-form-field class="col">
 
             <input formControlName="id" hidden />
+            <input formControlName="imageId" hidden />
 
             <input matInput placeholder="Full Name" formControlName="name" required>
             <mat-error *ngFor="let validation of validation_messages.name">

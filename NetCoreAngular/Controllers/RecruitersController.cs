@@ -24,14 +24,17 @@ namespace NetCoreAngular.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Recruiter>>> GetRecruiter()
         {
-            return await _context.Recruiter.ToListAsync();
+            return await _context.Recruiter
+                .ToListAsync();
         }
 
         // GET: api/Recruiters/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Recruiter>> GetRecruiter(int id)
         {
-            var recruiter = await _context.Recruiter.FindAsync(id);
+            var recruiter = await _context.Recruiter
+                .Include(x => x.Image)
+                .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
             if (recruiter == null)
             {
@@ -43,7 +46,7 @@ namespace NetCoreAngular.Controllers
 
         // PUT: api/Recruiters/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRecruiter(int id, Recruiter recruiter)
+        public async Task<IActionResult> PutRecruiter(int id, RecruiterDto recruiter)
         {
             if (id != recruiter.Id)
             {

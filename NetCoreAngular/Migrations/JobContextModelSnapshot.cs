@@ -38,6 +38,25 @@ namespace NetCoreAngular.Migrations
                     b.ToTable("Company");
                 });
 
+            modelBuilder.Entity("NetCoreAngular.Models.FileUpload", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Filename");
+
+                    b.Property<int?>("Ref");
+
+                    b.Property<string>("Type");
+
+                    b.Property<string>("Uri");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FileUpload");
+                });
+
             modelBuilder.Entity("NetCoreAngular.Models.Job", b =>
                 {
                     b.Property<int>("Id")
@@ -82,7 +101,7 @@ namespace NetCoreAngular.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Image");
+                    b.Property<int?>("ImageId");
 
                     b.Property<string>("Location")
                         .IsRequired();
@@ -98,6 +117,8 @@ namespace NetCoreAngular.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ImageId");
+
                     b.ToTable("Recruiter");
                 });
 
@@ -110,6 +131,13 @@ namespace NetCoreAngular.Migrations
                     b.HasOne("NetCoreAngular.Models.Recruiter", "Recruiter")
                         .WithMany()
                         .HasForeignKey("RecruiterId");
+                });
+
+            modelBuilder.Entity("NetCoreAngular.Models.Recruiter", b =>
+                {
+                    b.HasOne("NetCoreAngular.Models.FileUpload", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
                 });
 #pragma warning restore 612, 618
         }

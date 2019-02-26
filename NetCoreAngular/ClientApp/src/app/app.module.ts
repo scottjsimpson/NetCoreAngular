@@ -39,6 +39,7 @@ import { RecruiterThumbnailComponent } from './recruiters/recruiter-list/recruit
 import { JobEditorComponent } from './jobs/job-editor/job-editor.component';
 import { RecruiterResolver } from './resolvers/recruiter.resolver';
 import { RecruiterEditorComponent } from './recruiters/recruiter-editor/recruiter-editor.component';
+import { FileUploadService } from './services/file-upload.service';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { RecruiterEditorComponent } from './recruiters/recruiter-editor/recruite
       HttpClientModule
   ],
   providers: [
+    FileUploadService,
     JobService,
     JobListResolver,
     JobResolver,
