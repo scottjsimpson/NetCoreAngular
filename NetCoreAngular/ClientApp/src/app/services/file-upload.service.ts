@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Form } from '@angular/forms';
@@ -14,13 +14,13 @@ export class FileUploadService {
   constructor(private http: HttpClient) { }
 
   saveImage(file) {
-    debugger
-    return this.http.post<Form>(this.apiRoute, file)
+    const options = { headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }) };
+
+    var formData = new FormData();
+    formData.append('file', file, file.name);
+
+    return this.http.post(this.apiRoute, formData)
       .pipe(catchError(this.handleError<Form>('uploadFile')))
-      .subscribe(response => {
-        console.log(response);
-      },
-      error => { console.log(error) });
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

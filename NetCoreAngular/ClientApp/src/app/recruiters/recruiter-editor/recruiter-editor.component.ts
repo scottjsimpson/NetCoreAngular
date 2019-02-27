@@ -5,6 +5,7 @@ import { Recruiter } from 'src/app/models/recruiter';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { RecruiterDto } from 'src/app/models/recruiterDto';
+import { FileUpload } from 'src/app/models/file-upload';
 
 @Component({
   selector: 'app-recruiter-editor',
@@ -12,7 +13,7 @@ import { RecruiterDto } from 'src/app/models/recruiterDto';
   styleUrls: ['./recruiter-editor.component.css']
 })
 export class RecruiterEditorComponent implements OnInit {
-  recruiter: Recruiter = <Recruiter>{};
+  recruiter: Recruiter = <Recruiter>{ image: null };
   title: string;
   url: any = '';
 
@@ -53,12 +54,14 @@ export class RecruiterEditorComponent implements OnInit {
     if (!isAdd) {
       this.recruiter = this.route.snapshot.data.recruiter;
     }
-    this.url = this.recruiter.image.uri || '../../../assets/images/placeholder.png';
+    this.url = '../../../assets/images/placeholder.png';
+    if (this.recruiter.image && this.recruiter.image.uri) {
+      this.url = this.recruiter.image.uri;
+    }
     this.createForm();
   }
 
-  save(recruiter: RecruiterDto) {
-    debugger
+  save(recruiter: Recruiter) {
     this.recruiterService.saveRecruiter(recruiter)
       .subscribe(response => {
         this.router.navigate(['/recruiters']);
@@ -82,7 +85,7 @@ export class RecruiterEditorComponent implements OnInit {
         Validators.required,
         Validators.maxLength(255)
       ])),
-      imageId: [this.recruiter.imageId || 0],
+      imageId: [this.recruiter.imageId || null],
       image: [this.recruiter.image || null]
     });
   }
@@ -92,23 +95,17 @@ export class RecruiterEditorComponent implements OnInit {
     let reader = new FileReader();
     if (event.target.files && event.target.files.length) {
       const file: File = (event.target.files as FileList)[0];
-      reader.readAsDataURL(file);
 
-      reader.onload = () => {
-        this.url = reader.result;
-      };
+      // upload and assign the response
+      this.fileUploadService.saveImage(file)
+        .subscribe(response => {
+          const image = <FileUpload>response;
+          this.recruiterForm.get('imageId').setValue(image.id);
+          this.url = image.uri;
+        },
+        error => {
+            console.log(error)
+        });
     }
-
-    // set form value
-    if (event.target.files.length > 0) {
-      let file = event.target.files[0];
-      this.recruiterForm.get('image').setValue(file);
-    }      
-  }
-
-  postImage(file) {
-    const formData = new FormData();
-    formData.append('image', file, file.name);
-    this.fileUploadService.saveImage(formData);
   }
 }

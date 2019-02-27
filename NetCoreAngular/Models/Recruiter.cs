@@ -5,21 +5,6 @@ using System.IO;
 
 namespace NetCoreAngular.Models
 {
-    public class RecruiterDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Role { get; set; }
-        public string Description { get; set; }
-        public string Email { get; set; }
-        public string Location { get; set; }
-        public string Tel { get; set; }
-
-        public int? ImageId { get; set; }
-
-        public IFormFile Image { get; set; }
-    }
-
     public class Recruiter
     {
         public int Id { get; set; }

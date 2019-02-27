@@ -46,7 +46,7 @@ namespace NetCoreAngular.Controllers
 
         // PUT: api/Recruiters/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRecruiter(int id, RecruiterDto recruiter)
+        public async Task<IActionResult> PutRecruiter(int id, Recruiter recruiter)
         {
             if (id != recruiter.Id)
             {

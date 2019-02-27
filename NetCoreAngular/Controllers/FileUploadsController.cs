@@ -80,7 +80,7 @@ namespace NetCoreAngular.Controllers
         [HttpPost]
         public async Task<ActionResult<FileUpload>> PostFileUpload(IFormFile file)
         {
-            bool isUploaded = false;
+            FileUpload fileUpload = null;
 
             try
             {
@@ -101,7 +101,7 @@ namespace NetCoreAngular.Controllers
                     {
                         using (Stream stream = file.OpenReadStream())
                         {
-                            isUploaded = await StorageHelper.UploadFileToStorage(stream, file.FileName, storageAccount);
+                            fileUpload = await StorageHelper.UploadFileToStorage(stream, "images", file.FileName, storageAccount);
                         }
                     }
                 }
@@ -110,9 +110,11 @@ namespace NetCoreAngular.Controllers
                     return new UnsupportedMediaTypeResult();
                 }
 
-                if (isUploaded)
+                if (fileUpload != null)
                 {
-                    return new AcceptedResult();
+                    _context.FileUpload.Add(fileUpload);
+                    await _context.SaveChangesAsync();
+                    return new AcceptedResult(fileUpload.Uri, fileUpload);
                 }
                 else
                     return BadRequest("Look like the image couldnt upload to the storage");

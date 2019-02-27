@@ -1,7 +1,8 @@
 <div class="app-recruiter-details">
   <mat-card>
     <mat-card-title-group class="fullBleed">
-      <img mat-card-md-image [src]="recruiter?.image?.uri || ''">
+      <img mat-card-md-image [src]="recruiter?.image?.uri ||
+           '../../../assets/images/placeholder.png'">
       <mat-card-title>{{recruiter?.name}}</mat-card-title>
     </mat-card-title-group>
     <mat-card-content>
