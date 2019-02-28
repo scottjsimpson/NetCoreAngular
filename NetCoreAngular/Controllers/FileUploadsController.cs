@@ -117,8 +117,9 @@ namespace NetCoreAngular.Controllers
 
                     if (recruiterId != 0)
                     {
-                        // update image reference and cleanup storage
-                        await UpdateRecruiterImage(recruiterId, imageId, fileUpload.Id);
+                        await UpdateRecruiterImage(recruiterId, fileUpload.Id);
+
+                        await DeleteFileUpload(imageId);
                     }
 
                     return new AcceptedResult(fileUpload.Uri, fileUpload);
@@ -133,20 +134,17 @@ namespace NetCoreAngular.Controllers
         }
 
         [NonAction]
-        private async Task UpdateRecruiterImage(int recruiterId, int imageId, int newImageId)
+        private async Task UpdateRecruiterImage(int recruiterId, int newImageId)
         {
-            var recruiter = _context.Recruiter
-                .SingleOrDefault(x => x.Id == recruiterId);
+            var recruiter = await _context.Recruiter
+                .SingleOrDefaultAsync(x => x.Id == recruiterId);
 
-            if (recruiter != null)
+            if (recruiter != null && newImageId > 0)
             {
-                if (newImageId > 0)
-                    recruiter.ImageId = newImageId;
-                else
-                    recruiter.ImageId = null;
+                recruiter.ImageId = newImageId;
             }
 
-            await DeleteFileUpload(imageId);
+            await _context.SaveChangesAsync();
         }
 
         // DELETE: api/FileUploads/5
