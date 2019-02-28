@@ -38,11 +38,56 @@
 
 /deep/ .app-job-details,
 /deep/ .app-recruiter-details,
-/deep/ .app-job-editor {
+/deep/ .app-job-editor,
+/deep/ .app-recruiter-editor {
   mat-card {
     max-width: 500px;
     margin: 0 auto;
     margin-top: 2em;
+
+    .hoverable {
+      position: relative;
+      display: block;
+      cursor: pointer;
+      height: 114px;
+      width: 114px;
+      border: 1px solid #000;
+      border-radius: 50%;
+    }
+
+    .hoverable .hover-text {
+      position: absolute;
+      display: none;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      z-index: 2;
+    }
+
+    .hoverable .background {
+      position: absolute;
+      display: none;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.5);
+      pointer-events: none;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .hoverable:hover .hover-text {
+      display: block;
+    }
+
+    .hoverable:hover .background {
+      display: block;
+    }
+
+    #imageInput {
+      display: none;
+    }
 
     img {
       border-radius: 50%;
@@ -184,4 +229,3 @@
 /deep/ trm-tab > mat-input-container:first-child {
   padding-top: 25px;
 }
-

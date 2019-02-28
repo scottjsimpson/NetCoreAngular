@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace NetCoreAngular.Models
 {
@@ -27,6 +29,7 @@ namespace NetCoreAngular.Models
         [DataType(DataType.PhoneNumber)]
         public string Tel { get; set; }
 
-        public string Image { get; set; }
+        public int? ImageId { get; set; }
+        public FileUpload Image { get; set; }
     }
 }

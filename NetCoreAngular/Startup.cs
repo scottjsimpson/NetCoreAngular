@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using NetCoreAngular.Models;
+using Microsoft.WindowsAzure.Storage;
 
 namespace NetCoreAngular
 {
@@ -32,6 +33,8 @@ namespace NetCoreAngular
 
             services.AddDbContext<JobContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("JobContext")));
+
+            services.Configure<AzureStorageConfig>(Configuration.GetSection("AzureStorageConfig"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

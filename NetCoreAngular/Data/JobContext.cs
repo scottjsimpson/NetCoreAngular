@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace NetCoreAngular.Models
 {
@@ -16,5 +12,6 @@ namespace NetCoreAngular.Models
         public DbSet<Job> Job { get; set; }
         public DbSet<Recruiter> Recruiter { get; set; }
         public DbSet<Company> Company { get; set; }
+        public DbSet<FileUpload> FileUpload { get; set; }
     }
 }

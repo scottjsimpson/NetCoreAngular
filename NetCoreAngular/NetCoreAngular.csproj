@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,18 +27,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190214113205_Recruiter.cs" />
+    <Compile Remove="Migrations\20190214113205_Recruiter.Designer.cs" />
+    <Compile Remove="Migrations\20190218100928_JobFieldChanges.cs" />
+    <Compile Remove="Migrations\20190218100928_JobFieldChanges.Designer.cs" />
     <Compile Remove="Migrations\20190219085056_RecruiterTelTypeUpdate.cs" />
     <Compile Remove="Migrations\20190219085056_RecruiterTelTypeUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20190219134532_RecruiterChanges.cs" />
+    <Compile Remove="Migrations\20190219134532_RecruiterChanges.Designer.cs" />
+    <Compile Remove="Migrations\20190221143932_RecruiterOptional.cs" />
+    <Compile Remove="Migrations\20190221143932_RecruiterOptional.Designer.cs" />
     <Compile Remove="Migrations\20190222092111_AddImageProperty.cs" />
     <Compile Remove="Migrations\20190222092111_AddImageProperty.Designer.cs" />
+    <Compile Remove="Migrations\20190222095016_AddCompanyImage.cs" />
+    <Compile Remove="Migrations\20190222095016_AddCompanyImage.Designer.cs" />
+    <Compile Remove="Migrations\20190226142532_ImageCol.cs" />
+    <Compile Remove="Migrations\20190226142532_ImageCol.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\models\company.ts" />
+    <None Remove="ClientApp\src\app\models\file-upload.ts" />
+    <None Remove="ClientApp\src\app\models\recruiterDto.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\models\company.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\file-upload.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\recruiterDto.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\resolvers\recruiter.resolver.ts" />
   </ItemGroup>
 

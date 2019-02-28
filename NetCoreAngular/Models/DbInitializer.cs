@@ -14,6 +14,23 @@ namespace NetCoreAngular.Model
         {
             context.Database.Migrate();
 
+            // Look for recruiter images
+            if (!context.FileUpload.Where(x => x.Type.Equals("recruiter")).Any())
+            {
+                var images = new List<FileUpload>();
+                images.Add(new FileUpload() { Type = "recruiter", Uri = "../../assets/images/sarah.jpg" });
+                images.Add(new FileUpload() { Type = "recruiter", Uri = "../../assets/images/john.jpg" });
+                images.Add(new FileUpload() { Type = "recruiter", Uri = "../../assets/images/sam.jpg" });
+                images.Add(new FileUpload() { Type = "recruiter", Uri = "../../assets/images/janet.jpg" });
+
+                foreach (var image in images)
+                {
+                    context.FileUpload.Add(image);
+                }
+
+                context.SaveChanges();
+            }
+
             // Look for any recruiters.
             if (!context.Recruiter.Any())
             {
@@ -25,7 +42,8 @@ namespace NetCoreAngular.Model
                     Location = "Belfast",
                     Email = "s.smith@netcoreng.com",
                     Tel = "+44 (0) 2892 14521485",
-                    Image = "../../assets/images/sarah.jpg",
+                    ImageId = context.FileUpload
+                    .FirstOrDefault(x => x.Uri.Contains("sarah.jpg")).Id,
                     Description = ""
                 });
                 context.Recruiter.Add(new Recruiter()
@@ -35,7 +53,8 @@ namespace NetCoreAngular.Model
                     Location = "London",
                     Email = "j.black@netcoreng.com",
                     Tel = "+44 (0) 78528848481",
-                    Image = "../../assets/images/john.jpg",
+                    ImageId = context.FileUpload
+                    .FirstOrDefault(x => x.Uri.Contains("john.jpg")).Id,
                     Description = ""
                 });
                 context.Recruiter.Add(new Recruiter()
@@ -45,7 +64,8 @@ namespace NetCoreAngular.Model
                     Location = "Edinburgh",
                     Email = "s.jones@netcoreng.com",
                     Tel = "+44 (0) 78528848481",
-                    Image = "../../assets/images/sam.jpg",
+                    ImageId = context.FileUpload
+                    .FirstOrDefault(x => x.Uri.Contains("sam.jpg")).Id,
                     Description = ""
                 });
                 context.Recruiter.Add(new Recruiter()
@@ -55,7 +75,8 @@ namespace NetCoreAngular.Model
                     Location = "Belfast",
                     Email = "j.white@netcoreng.com",
                     Tel = "+44 (0) 13156418548",
-                    Image = "../../assets/images/janet.jpg",
+                    ImageId = context.FileUpload
+                    .FirstOrDefault(x => x.Uri.Contains("janet.jpg")).Id,
                     Description = ""
                 });
 

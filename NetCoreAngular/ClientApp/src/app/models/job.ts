@@ -7,7 +7,6 @@ export interface Job {
   location?: string;
   datePosted?: Date;
   salary?: number;
-  image?: string;
   description?: string;
   recruiter?: Recruiter;
   recruiterId?: number;

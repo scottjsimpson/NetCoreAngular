@@ -3,6 +3,7 @@ import { Recruiter } from '../models/recruiter';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FileUploadService } from './file-upload.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,9 @@ export class RecruiterService {
       .pipe(catchError(this.handleError<Recruiter>('getRecruiter')));
   }
 
-  saveRecruiter(recruiter) {
+  saveRecruiter(recruiter: Recruiter) {
     const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+
     if (recruiter.id) {
       // update existing
       return this.http.put<Recruiter>(this.apiRoute + recruiter.id, JSON.stringify(recruiter), options)

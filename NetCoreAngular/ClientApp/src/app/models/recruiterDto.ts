@@ -1,6 +1,4 @@
-import { FileUpload } from "./file-upload";
-
-export interface Recruiter {
+export interface RecruiterDto {
   id?: number | string;
   name?: string;
   role?: string;
@@ -10,5 +8,5 @@ export interface Recruiter {
   tel?: number;
   email?: string;
   imageId?: number;
-  image?: FileUpload;
+  image?: File;
 }
