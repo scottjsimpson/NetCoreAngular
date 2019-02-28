@@ -53,5 +53,14 @@ namespace NetCoreAngular.Helpers
 
             return new FileUpload() { Filename = fileName, Uri = blockBlob.Uri.ToString() };
         }
+
+        public static async Task DeleteFile(string uri, string storageAccount)
+        {
+            CloudStorageAccount account = CloudStorageAccount.Parse(storageAccount);
+
+            CloudBlockBlob blockBlob = new CloudBlockBlob(new Uri(uri), account.Credentials);
+
+            await blockBlob.DeleteIfExistsAsync();
+        }
     }
 }

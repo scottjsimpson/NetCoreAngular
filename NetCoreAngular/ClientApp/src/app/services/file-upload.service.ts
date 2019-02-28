@@ -13,12 +13,20 @@ export class FileUploadService {
 
   constructor(private http: HttpClient) { }
 
-  saveImage(file) {
-    const options = { headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }) };
-
+  saveRecruiterImage(file, recruiterId, imageId) {
     var formData = new FormData();
-    formData.append('file', file, file.name);
+    formData.append('file', file);
+    if (recruiterId) {
+      formData.append('recruiterId', recruiterId);
+    }
+    if (imageId) {
+      formData.append('imageId', imageId);
+    }
 
+    return this.saveImage(formData);
+  }
+
+  private saveImage(formData) {
     return this.http.post(this.apiRoute, formData)
       .pipe(catchError(this.handleError<Form>('uploadFile')))
   }

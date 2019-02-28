@@ -17,12 +17,12 @@ namespace NetCoreAngular.Controllers
     public class FileUploadsController : ControllerBase
     {
         private readonly JobContext _context;
-        private readonly IConfiguration _config;
+        private string _storageAccount;
 
         public FileUploadsController(JobContext context, IConfiguration config)
         {
             _context = context;
-            _config = config;
+            _storageAccount = config.GetConnectionString("StorageAccount");
         }
 
         // GET: api/FileUploads
@@ -78,7 +78,8 @@ namespace NetCoreAngular.Controllers
 
         // POST: api/FileUploads
         [HttpPost]
-        public async Task<ActionResult<FileUpload>> PostFileUpload(IFormFile file)
+        public async Task<ActionResult<FileUpload>> PostFileUpload(IFormFile file, 
+            [FromForm] int imageId, [FromForm] int recruiterId, [FromForm] int companyId)
         {
             FileUpload fileUpload = null;
 
@@ -88,9 +89,8 @@ namespace NetCoreAngular.Controllers
                 {
                     return BadRequest("No file received from the upload");
                 }
-
-                string storageAccount = _config.GetConnectionString("StorageAccount");
-                if (string.IsNullOrEmpty(storageAccount))
+                
+                if (string.IsNullOrEmpty(_storageAccount))
                 {
                     return BadRequest("No StorageAccount found in appsettings.json");
                 }
@@ -101,7 +101,7 @@ namespace NetCoreAngular.Controllers
                     {
                         using (Stream stream = file.OpenReadStream())
                         {
-                            fileUpload = await StorageHelper.UploadFileToStorage(stream, "images", file.FileName, storageAccount);
+                            fileUpload = await StorageHelper.UploadFileToStorage(stream, "images", file.FileName, _storageAccount);
                         }
                     }
                 }
@@ -114,6 +114,13 @@ namespace NetCoreAngular.Controllers
                 {
                     _context.FileUpload.Add(fileUpload);
                     await _context.SaveChangesAsync();
+
+                    if (recruiterId != 0)
+                    {
+                        // update image reference and cleanup storage
+                        await UpdateRecruiterImage(recruiterId, imageId, fileUpload.Id);
+                    }
+
                     return new AcceptedResult(fileUpload.Uri, fileUpload);
                 }
                 else
@@ -125,6 +132,23 @@ namespace NetCoreAngular.Controllers
             }
         }
 
+        [NonAction]
+        private async Task UpdateRecruiterImage(int recruiterId, int imageId, int newImageId)
+        {
+            var recruiter = _context.Recruiter
+                .SingleOrDefault(x => x.Id == recruiterId);
+
+            if (recruiter != null)
+            {
+                if (newImageId > 0)
+                    recruiter.ImageId = newImageId;
+                else
+                    recruiter.ImageId = null;
+            }
+
+            await DeleteFileUpload(imageId);
+        }
+
         // DELETE: api/FileUploads/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<FileUpload>> DeleteFileUpload(int id)
@@ -134,6 +158,8 @@ namespace NetCoreAngular.Controllers
             {
                 return NotFound();
             }
+
+            await StorageHelper.DeleteFile(fileUpload.Uri, _storageAccount);
 
             _context.FileUpload.Remove(fileUpload);
             await _context.SaveChangesAsync();

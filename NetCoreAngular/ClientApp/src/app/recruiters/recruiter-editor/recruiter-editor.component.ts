@@ -54,7 +54,7 @@ export class RecruiterEditorComponent implements OnInit {
     if (!isAdd) {
       this.recruiter = this.route.snapshot.data.recruiter;
     }
-    this.url = '../../../assets/images/placeholder.png';
+    this.url = '/assets/images/placeholder.jpg';
     if (this.recruiter.image && this.recruiter.image.uri) {
       this.url = this.recruiter.image.uri;
     }
@@ -91,16 +91,17 @@ export class RecruiterEditorComponent implements OnInit {
   }
 
   onFileChange(event) {
-    // set preview to selected file
-    let reader = new FileReader();
     if (event.target.files && event.target.files.length) {
       const file: File = (event.target.files as FileList)[0];
+      const recruiterId = this.recruiterForm.get('id');
+      const imageId = this.recruiterForm.get('imageId');
 
       // upload and assign the response
-      this.fileUploadService.saveImage(file)
+      this.fileUploadService
+        .saveRecruiterImage(file, recruiterId.value, imageId.value)
         .subscribe(response => {
           const image = <FileUpload>response;
-          this.recruiterForm.get('imageId').setValue(image.id);
+          imageId.setValue(image.id);
           this.url = image.uri;
         },
         error => {
