@@ -58,9 +58,12 @@ namespace NetCoreAngular.Helpers
         {
             CloudStorageAccount account = CloudStorageAccount.Parse(storageAccount);
 
-            CloudBlockBlob blockBlob = new CloudBlockBlob(new Uri(uri), account.Credentials);
+            if (uri.Contains(account.BlobEndpoint.ToString()))
+            {
+                CloudBlockBlob blockBlob = new CloudBlockBlob(new Uri(uri), account.Credentials);
 
-            await blockBlob.DeleteIfExistsAsync();
+                await blockBlob.DeleteIfExistsAsync();
+            }
         }
     }
 }

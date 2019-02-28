@@ -159,10 +159,10 @@ namespace NetCoreAngular.Controllers
                 return NotFound();
             }
 
-            await StorageHelper.DeleteFile(fileUpload.Uri, _storageAccount);
-
             _context.FileUpload.Remove(fileUpload);
             await _context.SaveChangesAsync();
+
+            await StorageHelper.DeleteFile(fileUpload.Uri, _storageAccount);
 
             return fileUpload;
         }
