@@ -118,9 +118,9 @@ namespace NetCoreAngular.Controllers
                     if (recruiterId != 0)
                     {
                         await UpdateRecruiterImage(recruiterId, fileUpload.Id);
-
-                        await DeleteFileUpload(imageId);
                     }
+
+                    await DeleteFileUpload(imageId);
 
                     return new AcceptedResult(fileUpload.Uri, fileUpload);
                 }
@@ -142,9 +142,9 @@ namespace NetCoreAngular.Controllers
             if (recruiter != null && newImageId > 0)
             {
                 recruiter.ImageId = newImageId;
-            }
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
         }
 
         // DELETE: api/FileUploads/5
