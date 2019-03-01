@@ -25,6 +25,7 @@ namespace NetCoreAngular.Controllers
         public async Task<ActionResult<IEnumerable<Recruiter>>> GetRecruiter()
         {
             return await _context.Recruiter
+                .Include(x => x.Image)
                 .ToListAsync();
         }
 
