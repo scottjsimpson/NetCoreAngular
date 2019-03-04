@@ -27,6 +27,7 @@ namespace NetCoreAngular.Controllers
             return await _context.Job
                 .Include(x => x.Recruiter)
                 .Include(x => x.Company)
+                .ThenInclude(x => x.Image)
                 .ToListAsync();
         }
 
@@ -37,6 +38,7 @@ namespace NetCoreAngular.Controllers
             var job = await _context.Job
                 .Include(x => x.Recruiter)
                 .Include(x => x.Company)
+                .ThenInclude(x => x.Image)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (job == null)
