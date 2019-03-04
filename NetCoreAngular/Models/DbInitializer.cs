@@ -14,14 +14,14 @@ namespace NetCoreAngular.Model
         {
             context.Database.Migrate();
 
-            // Look for recruiter images
-            if (!context.FileUpload.Where(x => x.Type.Equals("recruiter")).Any())
+            if (!context.FileUpload.Any())
             {
                 var images = new List<FileUpload>();
-                images.Add(new FileUpload() { Type = "recruiter", Uri = "../../assets/images/sarah.jpg" });
-                images.Add(new FileUpload() { Type = "recruiter", Uri = "../../assets/images/john.jpg" });
-                images.Add(new FileUpload() { Type = "recruiter", Uri = "../../assets/images/sam.jpg" });
-                images.Add(new FileUpload() { Type = "recruiter", Uri = "../../assets/images/janet.jpg" });
+                images.Add(new FileUpload() { Uri = "../../assets/images/sarah.jpg" });
+                images.Add(new FileUpload() { Uri = "../../assets/images/john.jpg" });
+                images.Add(new FileUpload() { Uri = "../../assets/images/sam.jpg" });
+                images.Add(new FileUpload() { Uri = "../../assets/images/janet.jpg" });
+                images.Add(new FileUpload() { Uri = "../../assets/images/company.png" });
 
                 foreach (var image in images)
                 {
@@ -97,7 +97,8 @@ namespace NetCoreAngular.Model
                     Name = "Company Name",
                     Email = "email@company.com",
                     Tel = "+44 (0) 202898848411",
-                    Image = "../../assets/images/company.png"
+                    ImageId = context.FileUpload
+                    .FirstOrDefault(x => x.Uri.Contains("company.png")).Id,
                 });
 
                 foreach (var c in companies)

@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Recruiter } from 'src/app/models/recruiter';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FileUploadService } from 'src/app/services/file-upload.service';
-import { RecruiterDto } from 'src/app/models/recruiterDto';
 import { FileUpload } from 'src/app/models/file-upload';
 
 @Component({

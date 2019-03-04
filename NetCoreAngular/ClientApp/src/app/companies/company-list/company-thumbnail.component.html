@@ -1,0 +1,14 @@
+<div class="well thumbnail">
+  <div class="row">
+    <div class="col-4">
+      <img [routerLink]="['/companies', company.id]" mat-card-md-image [src]="company?.image?.uri ||
+           '../../../assets/images/placeholder.jpg'"
+           style="border-radius:50%" height="114" width="114">
+    </div>
+    <div class="col">
+      <h4><a class="data-link" [routerLink]="['/companies', company.id]">{{company?.name}}</a></h4>
+      <div>{{company?.email}}</div>
+      <div>{{company?.tel}}</div>
+    </div>
+  </div>
+</div>

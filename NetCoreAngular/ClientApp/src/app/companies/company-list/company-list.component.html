@@ -1,0 +1,16 @@
+<div>
+  <div class="row">
+    <div class="col">
+      <h2>Companies</h2>
+    </div>
+    <div class="col">
+      <button [routerLink]="['/companies/new']" class="btn btn-primary float-right">Create</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div *ngFor="let company of companies" class="col-md-5">
+      <app-company-thumbnail [company]="company"></app-company-thumbnail>
+    </div>
+  </div>
+</div>

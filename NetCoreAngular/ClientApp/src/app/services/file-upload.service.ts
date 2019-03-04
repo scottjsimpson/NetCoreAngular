@@ -13,6 +13,19 @@ export class FileUploadService {
 
   constructor(private http: HttpClient) { }
 
+  saveCompanyImage(file, companyId, imageId) {
+    var formData = new FormData();
+    formData.append('file', file);
+    if (companyId) {
+      formData.append('companyId', companyId);
+    }
+    if (imageId) {
+      formData.append('imageId', imageId);
+    }
+
+    return this.saveImage(formData);
+  }
+
   saveRecruiterImage(file, recruiterId, imageId) {
     var formData = new FormData();
     formData.append('file', file);

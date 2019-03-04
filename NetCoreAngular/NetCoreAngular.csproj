@@ -48,13 +48,11 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\models\company.ts" />
     <None Remove="ClientApp\src\app\models\file-upload.ts" />
-    <None Remove="ClientApp\src\app\models\recruiterDto.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\models\company.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\file-upload.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\models\recruiterDto.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\resolvers\recruiter.resolver.ts" />
   </ItemGroup>
 
