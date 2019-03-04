@@ -120,7 +120,12 @@ namespace NetCoreAngular.Controllers
                         await UpdateRecruiterImage(recruiterId, fileUpload.Id);
                     }
 
-                    await DeleteFileUpload(imageId);
+                    if (companyId != 0)
+                    {
+                        await UpdateCompanyImage(companyId, imageId);
+                    }
+
+                   await DeleteFileUpload(imageId);
 
                     return new AcceptedResult(fileUpload.Uri, fileUpload);
                 }
@@ -130,6 +135,20 @@ namespace NetCoreAngular.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [NonAction]
+        private async Task UpdateCompanyImage(int companyId, int newImageId)
+        {
+            var company = await _context.Company
+                .SingleOrDefaultAsync(x => x.Id == companyId);
+
+            if (company != null && newImageId > 0)
+            {
+                company.ImageId = newImageId;
+
+                await _context.SaveChangesAsync();
             }
         }
 

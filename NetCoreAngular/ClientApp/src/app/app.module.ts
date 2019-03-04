@@ -40,6 +40,13 @@ import { JobEditorComponent } from './jobs/job-editor/job-editor.component';
 import { RecruiterResolver } from './resolvers/recruiter.resolver';
 import { RecruiterEditorComponent } from './recruiters/recruiter-editor/recruiter-editor.component';
 import { FileUploadService } from './services/file-upload.service';
+import { CompanyDetailsComponent } from './companies/company-details/company-details.component';
+import { CompanyListComponent } from './companies/company-list/company-list.component';
+import { CompanyEditorComponent } from './companies/company-editor/company-editor.component';
+import { CompanyService } from './services/company.service';
+import { CompanyResolver } from './resolvers/company.resolver';
+import { CompanyListResolver } from './resolvers/company-list.resolver';
+import { CompanyThumbnailComponent } from './companies/company-list/company-thumbnail.component';
 
 @NgModule({
   declarations: [
@@ -51,11 +58,15 @@ import { FileUploadService } from './services/file-upload.service';
     JobListComponent,
     JobDetailsComponent,
     JobThumbnailComponent,
+    JobEditorComponent,
     RecruiterListComponent,
     RecruiterDetailsComponent,
     RecruiterThumbnailComponent,
-    JobEditorComponent,
     RecruiterEditorComponent,
+    CompanyDetailsComponent,
+    CompanyListComponent,
+    CompanyEditorComponent,
+    CompanyThumbnailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal' }),
@@ -65,6 +76,10 @@ import { FileUploadService } from './services/file-upload.service';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'companies', component: CompanyListComponent, resolve: { companies: CompanyListResolver } },
+      { path: 'companies/new', component: CompanyEditorComponent, pathMatch: 'full' },
+      { path: 'companies/:id/edit', component: CompanyEditorComponent, resolve: { company: CompanyResolver }, pathMatch: 'full' },
+      { path: 'companies/:id', component: CompanyDetailsComponent, resolve: { company: CompanyResolver } },
       { path: 'jobs', component: JobListComponent, resolve: { jobs: JobListResolver } },
       { path: 'jobs/new', component: JobEditorComponent, pathMatch: 'full' },
       { path: 'jobs/:id/edit', component: JobEditorComponent, resolve: { job: JobResolver }, pathMatch: 'full' },
@@ -98,7 +113,10 @@ import { FileUploadService } from './services/file-upload.service';
     JobListResolver,
     JobResolver,
     RecruiterService,
-    RecruiterResolver
+    RecruiterResolver,
+    CompanyService,
+    CompanyResolver,
+    CompanyListResolver
   ],
   bootstrap: [AppComponent]
 })

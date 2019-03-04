@@ -1,0 +1,61 @@
+<div class="app-company-editor">
+
+  <h3>{{title}} Company</h3>
+
+  <form [formGroup]="companyForm" (ngSubmit)="save(companyForm.value)"
+        autocomplete="off" novalidate>
+
+    <mat-card>
+      <div class="hoverable" (click)="imageInput.click()">
+        <img mat-card-md-image [src]="url">
+        <div class="hover-text">Choose image</div>
+        <div class="background"></div>
+      </div>
+      <input id="imageInput" #imageInput type="file" (change)="onFileChange($event)" accept="image/*" />
+
+      <mat-card-content>
+        <div class="row pt-3">
+          <mat-form-field class="col">
+
+            <input formControlName="id" hidden />
+            <input formControlName="imageId" hidden />
+
+            <input matInput placeholder="Name" formControlName="name" required>
+            <mat-error *ngFor="let validation of validation_messages.name">
+              <mat-error class="error-message" *ngIf="companyForm.get('name').hasError(validation.type) &&
+                  (companyForm.get('name').dirty || companyForm.get('name').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="col">
+            <input matInput placeholder="Telephone" formControlName="tel" required>
+            <mat-error *ngFor="let validation of validation_messages.tel">
+              <mat-error class="error-message" *ngIf="companyForm.get('tel').hasError(validation.type) &&
+                  (companyForm.get('tel').dirty || companyForm.get('tel').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col">
+            <input matInput placeholder="Email" formControlName="email" required>
+            <mat-error *ngFor="let validation of validation_messages.email">
+              <mat-error class="error-message" *ngIf="companyForm.get('email').hasError(validation.type) &&
+                  (companyForm.get('email').dirty || companyForm.get('email').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions fxLayout fxLayoutAlign="center center">
+          <button [disabled]="companyForm.invalid" class="btn btn-primary">Save</button>
+          <button [routerLink]="['/companies']" type="button" class="btn btn-secondary ml-2">Go Back</button>
+        </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

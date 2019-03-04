@@ -36,10 +36,12 @@
   }
 }
 
+/deep/ .app-company-details,
 /deep/ .app-job-details,
 /deep/ .app-recruiter-details,
 /deep/ .app-job-editor,
-/deep/ .app-recruiter-editor {
+/deep/ .app-recruiter-editor,
+/deep/ .app-company-editor {
   mat-card {
     max-width: 500px;
     margin: 0 auto;
