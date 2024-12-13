@@ -2,7 +2,7 @@
 .NET Core Angular Project
 
 A demo project for a Recruitment web application.
-Same models as another repository, such as, Jobs and recrutiers.
+Same models as another repository, such as, Jobs and recruiters.
 
 Currently has Azure blob storage built in for the Recruiter and Company profile pictures.
 
